@@ -1,0 +1,201 @@
+#######################################################
+# Generated programmatically by CSV2JuliaDiffEq.      #
+# http://github.com/SiFTW/CSV2JuliaDiffEq             #
+#######################################################
+# generated from:
+#    reactions file: reactions.csv
+#    parameters file file: parameters_k1_numbers.csv
+#    rate law file: rateLaws.csv
+#
+# Statistics:
+#    Equations:25
+#    Parameters:119
+#######################################################
+
+# using DifferentialEquations@6.9, Plots
+# Pkg.build("GR") #have to restart to get it to take effect. Solves could not load library "libGR.dll" error.
+include("scanIncludes.jl")
+include("variableNames.jl")
+function odeFile(dy,y,p,t)
+	C=y[1]
+	Cp=y[2]
+	signal=y[3]
+	CB=y[4]
+	CpB=y[5]
+	CM=y[6]
+	CpM=y[7]
+	CBM=y[8]
+	CpBM=y[9]
+	B=y[10]
+	M=y[11]
+	BM=y[12]
+	TAK1=y[13]
+	TAK1p=y[14]
+	IKKp=y[15]
+	TAK1C=y[16]
+	TAK1pC=y[17]
+	IKKpC=y[18]
+	IKKppC=y[19]
+	IKK=y[20]
+	A20=y[21]
+	IKKC=y[22]
+	IKKpp=y[23]
+	IKKi=y[24]
+	IKKa=y[25]
+	#C
+	dy[1]= -C*paramFun("k1_Cp0",modify) - (signal*C*paramFun("k1_CpS",modify))/(C+paramFun("k2_kmCpS",modify)) - C*B*paramFun("k1_CaB",modify) + CB*paramFun("k1_CdB",modify) - C*M*paramFun("k1_CaM",modify) + CM*paramFun("k1_CdM",modify) - C*BM*paramFun("k1_CaBM",modify) + CBM*paramFun("k1_CdBM",modify)
+	#Cp
+	dy[2]= + C*paramFun("k1_Cp0",modify) + (signal*C*paramFun("k1_CpS",modify))/(C+paramFun("k2_kmCpS",modify)) - (Cp * paramFun("k1_Cpu",modify)) / (Cp + paramFun("k2_kmCpu",modify)) + (Cp * paramFun("k1_Cpu",modify)) / (Cp + paramFun("k2_kmCpu",modify)) - Cp*B*paramFun("k1_CpaB",modify) + CpB*paramFun("k1_CpdB",modify) - Cp*M*paramFun("k1_CpaM",modify) + CpM*paramFun("k1_CpdM",modify) - Cp*BM*paramFun("k1_CpaBM",modify) + CpBM*paramFun("k1_CpdBM",modify)
+	#signal
+	dy[3]= + originalsignal(t)
+	#CB
+	dy[4]= -CB*paramFun("k1_CpB0",modify) - (signal*CB*paramFun("k1_CpBS",modify))/(CB+paramFun("k2_kmCpBS",modify)) + (CpB * paramFun("k1_CpBu",modify)) / (CpB + paramFun("k2_kmCpBu",modify)) + C*B*paramFun("k1_CaB",modify) - CB*paramFun("k1_CdB",modify) - CB*M*paramFun("k1_CBaM",modify) + CBM*paramFun("k1_CBdM",modify) - paramFun("k1_TaB",modify) * ( CB+CpB ) * TAK1 - paramFun("k1_TpaB",modify) * ( CB+CpB ) * TAK1p - paramFun("k1_IaB",modify) * ( CB+CpB ) * IKK - paramFun("k1_IpaB",modify) * ( CB+CpB ) * IKKp
+	#CpB
+	dy[5]= + CB*paramFun("k1_CpB0",modify) + (signal*CB*paramFun("k1_CpBS",modify))/(CB+paramFun("k2_kmCpBS",modify)) - (CpB * paramFun("k1_CpBu",modify)) / (CpB + paramFun("k2_kmCpBu",modify)) + Cp*B*paramFun("k1_CpaB",modify) - CpB*paramFun("k1_CpdB",modify) - CpB*M*paramFun("k1_CpBaM",modify) + CpBM*paramFun("k1_CpBdM",modify) - paramFun("k1_TaB",modify) * ( CB+CpB ) * TAK1 - paramFun("k1_TpaB",modify) * ( CB+CpB ) * TAK1p - paramFun("k1_IaB",modify) * ( CB+CpB ) * IKK - paramFun("k1_IpaB",modify) * ( CB+CpB ) * IKKp
+	#CM
+	dy[6]= -CM*paramFun("k1_CpM0",modify) - (signal*CM*paramFun("k1_CpMS",modify))/(CM+paramFun("k2_kmCpMS",modify)) + CpM*paramFun("k1_CpMu",modify) + C*M*paramFun("k1_CaM",modify) - CM*paramFun("k1_CdM",modify) - CM*B*paramFun("k1_CMaB",modify) + CBM*paramFun("k1_CMdB",modify) - paramFun("k1_TaM",modify) * ( CM+CpM ) * TAK1 - paramFun("k1_TpaM",modify) * ( CM+CpM ) * TAK1p - paramFun("k1_IaM",modify) * ( CM+CpM ) * IKK - paramFun("k1_IpaM",modify) * ( CM+CpM ) * IKKp
+	#CpM
+	dy[7]= + CM*paramFun("k1_CpM0",modify) + (signal*CM*paramFun("k1_CpMS",modify))/(CM+paramFun("k2_kmCpMS",modify)) - CpM*paramFun("k1_CpMu",modify) + Cp*M*paramFun("k1_CpaM",modify) - CpM*paramFun("k1_CpdM",modify) - CpM*B*paramFun("k1_CpMaB",modify) + CpBM*paramFun("k1_CpMdB",modify) - paramFun("k1_TaM",modify) * ( CM+CpM ) * TAK1 - paramFun("k1_TpaM",modify) * ( CM+CpM ) * TAK1p - paramFun("k1_IaM",modify) * ( CM+CpM ) * IKK - paramFun("k1_IpaM",modify) * ( CM+CpM ) * IKKp
+	#CBM
+	dy[8]= -CBM*paramFun("k1_CpBM0",modify) - (signal*CBM*paramFun("k1_CpBMS",modify))/(CBM+paramFun("k2_kmCpBMS",modify)) + (CpBM * paramFun("k1_CpBMu",modify)) / (CpBM + paramFun("k2_kmCpBMu",modify)) + CB*M*paramFun("k1_CBaM",modify) - CBM*paramFun("k1_CBdM",modify) + CM*B*paramFun("k1_CMaB",modify) - CBM*paramFun("k1_CMdB",modify) + C*BM*paramFun("k1_CaBM",modify) - CBM*paramFun("k1_CdBM",modify) - paramFun("k1_TaBM",modify) * ( CBM+CpBM ) * TAK1 + TAK1C*paramFun("k1_TCd",modify) - paramFun("k1_TpaBM",modify) * ( CBM+CpBM ) * TAK1p + TAK1pC*paramFun("k1_TpCd",modify) - paramFun("k1_IaBM",modify) * ( CBM+CpBM ) * IKK + IKKC*paramFun("k1_ICd",modify) - paramFun("k1_IpaBM",modify) * ( CBM+CpBM ) * IKKp + IKKpC*paramFun("k1_IpCd",modify) + IKKppC*paramFun("k1_IppCd",modify)
+	#CpBM
+	dy[9]= + CBM*paramFun("k1_CpBM0",modify) + (signal*CBM*paramFun("k1_CpBMS",modify))/(CBM+paramFun("k2_kmCpBMS",modify)) - (CpBM * paramFun("k1_CpBMu",modify)) / (CpBM + paramFun("k2_kmCpBMu",modify)) + CpB*M*paramFun("k1_CpBaM",modify) - CpBM*paramFun("k1_CpBdM",modify) + CpM*B*paramFun("k1_CpMaB",modify) - CpBM*paramFun("k1_CpMdB",modify) + Cp*BM*paramFun("k1_CpaBM",modify) - CpBM*paramFun("k1_CpdBM",modify) - paramFun("k1_TaBM",modify) * ( CBM+CpBM ) * TAK1 - paramFun("k1_TpaBM",modify) * ( CBM+CpBM ) * TAK1p - paramFun("k1_IaBM",modify) * ( CBM+CpBM ) * IKK - paramFun("k1_IpaBM",modify) * ( CBM+CpBM ) * IKKp
+	#B
+	dy[10]= -B*M*paramFun("k1_BaM",modify) + BM*paramFun("k1_BdM",modify) - C*B*paramFun("k1_CaB",modify) + CB*paramFun("k1_CdB",modify) - Cp*B*paramFun("k1_CpaB",modify) + CpB*paramFun("k1_CpdB",modify) - CM*B*paramFun("k1_CMaB",modify) + CBM*paramFun("k1_CMdB",modify) - CpM*B*paramFun("k1_CpMaB",modify) + CpBM*paramFun("k1_CpMdB",modify)
+	#M
+	dy[11]= -B*M*paramFun("k1_BaM",modify) + BM*paramFun("k1_BdM",modify) - C*M*paramFun("k1_CaM",modify) + CM*paramFun("k1_CdM",modify) - Cp*M*paramFun("k1_CpaM",modify) + CpM*paramFun("k1_CpdM",modify) - CB*M*paramFun("k1_CBaM",modify) + CBM*paramFun("k1_CBdM",modify) - CpB*M*paramFun("k1_CpBaM",modify) + CpBM*paramFun("k1_CpBdM",modify)
+	#BM
+	dy[12]= + B*M*paramFun("k1_BaM",modify) - BM*paramFun("k1_BdM",modify) - C*BM*paramFun("k1_CaBM",modify) + CBM*paramFun("k1_CdBM",modify) - Cp*BM*paramFun("k1_CpaBM",modify) + CpBM*paramFun("k1_CpdBM",modify)
+	#TAK1
+	dy[13]= -TAK1*paramFun("k1_Tp0",modify) - (Cp*TAK1*paramFun("k1_CTpS",modify))/(TAK1+paramFun("k2_kmCTpS",modify)) - (CpB*TAK1*paramFun("k1_CBTpS",modify))/(TAK1+paramFun("k2_kmCBTpS",modify)) - (CpM*TAK1*paramFun("k1_CMTpS",modify))/(TAK1+paramFun("k2_kmCMTpS",modify)) - (CpBM*TAK1*paramFun("k1_CBMTpS",modify))/(TAK1+paramFun("k2_kmCBMTpS",modify)) - (IKKp*TAK1*paramFun("k1_TpIKK1",modify))/(TAK1+paramFun("k2_kmTpIKK1",modify)) + (TAK1p * paramFun("k1_Tpu",modify)) / (TAK1p + paramFun("k2_kmTpu",modify)) - paramFun("k1_TaB",modify) * ( CB+CpB ) * TAK1 - paramFun("k1_TaM",modify) * ( CM+CpM ) * TAK1 - paramFun("k1_TaBM",modify) * ( CBM+CpBM ) * TAK1 + TAK1C*paramFun("k1_TCd",modify)
+	#TAK1p
+	dy[14]= + TAK1*paramFun("k1_Tp0",modify) + (Cp*TAK1*paramFun("k1_CTpS",modify))/(TAK1+paramFun("k2_kmCTpS",modify)) + (CpB*TAK1*paramFun("k1_CBTpS",modify))/(TAK1+paramFun("k2_kmCBTpS",modify)) + (CpM*TAK1*paramFun("k1_CMTpS",modify))/(TAK1+paramFun("k2_kmCMTpS",modify)) + (CpBM*TAK1*paramFun("k1_CBMTpS",modify))/(TAK1+paramFun("k2_kmCBMTpS",modify)) + (IKKp*TAK1*paramFun("k1_TpIKK1",modify))/(TAK1+paramFun("k2_kmTpIKK1",modify)) - (TAK1p * paramFun("k1_Tpu",modify)) / (TAK1p + paramFun("k2_kmTpu",modify)) - paramFun("k1_TpaB",modify) * ( CB+CpB ) * TAK1p - paramFun("k1_TpaM",modify) * ( CM+CpM ) * TAK1p - paramFun("k1_TpaBM",modify) * ( CBM+CpBM ) * TAK1p + TAK1pC*paramFun("k1_TpCd",modify)
+	#IKKp
+	dy[15]=0 + IKK*paramFun("k1_Ip0",modify) + (TAK1p*IKK*paramFun("k1_IpTAKp",modify))/((IKK+paramFun("k2_kmIpTAKp",modify))*A20) + (TAK1pC*IKK*paramFun("k1_IpTAKpC",modify))/((IKK+paramFun("k2_kmIpTAKpC",modify))*A20) - (IKKp * paramFun("k1_Ipu",modify)) / (IKKp + paramFun("k2_kmIpu",modify)) - paramFun("k1_IpaB",modify) * ( CB+CpB ) * IKKp - paramFun("k1_IpaM",modify) * ( CM+CpM ) * IKKp - paramFun("k1_IpaBM",modify) * ( CBM+CpBM ) * IKKp + IKKpC*paramFun("k1_IpCd",modify)
+	#TAK1C
+	dy[16]= -TAK1C*paramFun("k1_TpC0",modify) - (Cp*TAK1C*paramFun("k1_CTpCS",modify))/(TAK1C+paramFun("k2_kmCTpCS",modify)) - (CpB*TAK1C*paramFun("k1_CBTpCS",modify))/(TAK1C+paramFun("k2_kmCBTpCS",modify)) - (CpM*TAK1C*paramFun("k1_CMTpCS",modify))/(TAK1C+paramFun("k2_kmCMTpCS",modify)) - (CpBM*TAK1C*paramFun("k1_CBMTpCS",modify))/(TAK1C+paramFun("k2_kmCBMTpCS",modify)) - (IKKp*TAK1C*paramFun("k1_TpCIKK1",modify))/(TAK1C+paramFun("k2_kmTpCIKK1",modify)) - (IKKpC*TAK1C*paramFun("k1_TpCIKK2",modify))/(TAK1C+paramFun("k2_kmTpCIKK2",modify)) - (IKKppC*TAK1C*paramFun("k1_TpCIKK3",modify))/(TAK1C+paramFun("k2_kmTpCIKK3",modify)) - (TAK1C * paramFun("k1_TpCu",modify)) / (TAK1C + paramFun("k2_kmTpCu",modify)) + paramFun("k1_TaB",modify) * ( CB+CpB ) * TAK1 + paramFun("k1_TaM",modify) * ( CM+CpM ) * TAK1 + paramFun("k1_TaBM",modify) * ( CBM+CpBM ) * TAK1 - TAK1C*paramFun("k1_TCd",modify)
+	#TAK1pC
+	dy[17]= + TAK1C*paramFun("k1_TpC0",modify) + (Cp*TAK1C*paramFun("k1_CTpCS",modify))/(TAK1C+paramFun("k2_kmCTpCS",modify)) + (CpB*TAK1C*paramFun("k1_CBTpCS",modify))/(TAK1C+paramFun("k2_kmCBTpCS",modify)) + (CpM*TAK1C*paramFun("k1_CMTpCS",modify))/(TAK1C+paramFun("k2_kmCMTpCS",modify)) + (CpBM*TAK1C*paramFun("k1_CBMTpCS",modify))/(TAK1C+paramFun("k2_kmCBMTpCS",modify)) + (IKKp*TAK1C*paramFun("k1_TpCIKK1",modify))/(TAK1C+paramFun("k2_kmTpCIKK1",modify)) + (IKKpC*TAK1C*paramFun("k1_TpCIKK2",modify))/(TAK1C+paramFun("k2_kmTpCIKK2",modify)) + (IKKppC*TAK1C*paramFun("k1_TpCIKK3",modify))/(TAK1C+paramFun("k2_kmTpCIKK3",modify)) + (TAK1C * paramFun("k1_TpCu",modify)) / (TAK1C + paramFun("k2_kmTpCu",modify)) + paramFun("k1_TpaB",modify) * ( CB+CpB ) * TAK1p + paramFun("k1_TpaM",modify) * ( CM+CpM ) * TAK1p + paramFun("k1_TpaBM",modify) * ( CBM+CpBM ) * TAK1p - TAK1pC*paramFun("k1_TpCd",modify)
+	#IKKpC
+	dy[18]=0 + IKKC*paramFun("k1_ICp0",modify) + (TAK1p*IKKC*paramFun("k1_ICpTAKp",modify))/((IKKC+paramFun("k2_kmICpTAKp",modify))*A20) + (TAK1pC*IKKC*paramFun("k1_ICpTAKpC",modify))/((IKKC+paramFun("k2_kmICpTAKpC",modify))*A20) - (IKKpC * paramFun("k1_IpCu",modify)) / (IKKpC + paramFun("k2_kmIpCu",modify)) + paramFun("k1_IpaB",modify) * ( CB+CpB ) * IKKp + paramFun("k1_IpaM",modify) * ( CM+CpM ) * IKKp + paramFun("k1_IpaBM",modify) * ( CBM+CpBM ) * IKKp - IKKpC*paramFun("k1_IpCd",modify) - (IKKpC * paramFun("k1_IpCfaIKKpC",modify)) / (IKKpC + paramFun("k2_kmIpCfaIKKpC",modify)) - (IKKppC*IKKpC*paramFun("k1_IpCfaIKKppC",modify))/(IKKpC+paramFun("k2_kmIpCfaIKKppC",modify)) + (IKKppC * paramFun("k1_IppCu",modify)) / (IKKppC + paramFun("k2_kmIppCu",modify))
+	#IKKppC
+	dy[19]=0 + (IKKpC * paramFun("k1_IpCfaIKKpC",modify)) / (IKKpC + paramFun("k2_kmIpCfaIKKpC",modify)) + (IKKppC*IKKpC*paramFun("k1_IpCfaIKKppC",modify))/(IKKpC+paramFun("k2_kmIpCfaIKKppC",modify)) - (IKKppC * paramFun("k1_IppCu",modify)) / (IKKppC + paramFun("k2_kmIppCu",modify)) - IKKppC*paramFun("k1_IppCd",modify) - (IKKppC * paramFun("k1_Ipphf",modify)) / (IKKppC + paramFun("k2_kmIpphf",modify))
+	#IKK
+	dy[20]= -IKK*paramFun("k1_Ip0",modify) - (TAK1p*IKK*paramFun("k1_IpTAKp",modify))/((IKK+paramFun("k2_kmIpTAKp",modify))*A20) - (TAK1pC*IKK*paramFun("k1_IpTAKpC",modify))/((IKK+paramFun("k2_kmIpTAKpC",modify))*A20) + (IKKp * paramFun("k1_Ipu",modify)) / (IKKp + paramFun("k2_kmIpu",modify)) - paramFun("k1_IaB",modify) * ( CB+CpB ) * IKK - paramFun("k1_IaM",modify) * ( CM+CpM ) * IKK - paramFun("k1_IaBM",modify) * ( CBM+CpBM ) * IKK + IKKC*paramFun("k1_ICd",modify) + (IKKi * paramFun("k1_Iir",modify)) / (IKKi + paramFun("k2_kmIir",modify))
+	#A20
+	dy[21]=0 - ( IKKa*A20 ) / ( paramFun("k1_km_A20induction",modify) + A20 ) + ( IKKa*A20 ) / ( paramFun("k1_km_A20induction",modify) + A20 ) - A20*paramFun("k1_A20log2halflife",modify)
+	#IKKC
+	dy[22]= -IKKC*paramFun("k1_ICp0",modify) - (TAK1p*IKKC*paramFun("k1_ICpTAKp",modify))/((IKKC+paramFun("k2_kmICpTAKp",modify))*A20) - (TAK1pC*IKKC*paramFun("k1_ICpTAKpC",modify))/((IKKC+paramFun("k2_kmICpTAKpC",modify))*A20) + (IKKpC * paramFun("k1_IpCu",modify)) / (IKKpC + paramFun("k2_kmIpCu",modify)) + paramFun("k1_IaB",modify) * ( CB+CpB ) * IKK + paramFun("k1_IaM",modify) * ( CM+CpM ) * IKK + paramFun("k1_IaBM",modify) * ( CBM+CpBM ) * IKK - IKKC*paramFun("k1_ICd",modify)
+	#IKKpp
+	dy[23]= + IKKppC*paramFun("k1_IppCd",modify) - (IKKpp * paramFun("k1_IppChf",modify)) / (IKKpp + paramFun("k2_kmIppChf",modify))
+	#IKKi
+	dy[24]= + (IKKppC * paramFun("k1_Ipphf",modify)) / (IKKppC + paramFun("k2_kmIpphf",modify)) + (IKKpp * paramFun("k1_IppChf",modify)) / (IKKpp + paramFun("k2_kmIppChf",modify)) - (IKKi * paramFun("k1_Iir",modify)) / (IKKi + paramFun("k2_kmIir",modify))
+	#IKKa  #(IKKp+IKKpC+IKKpp+IKKppC)
+	dy[25]= (dy[15]+dy[18]+dy[19]+dy[23])
+end
+function plotallspeciesna(phase2_sollist,#=phase1_sollist,=#tspan)
+	specie_names=["C","Cp","signal","CB","CpB","CM","CpM","CBM","CpBM","B","M","BM","TAK1","TAK1p","IKKp","TAK1C","TAK1pC","IKKpC","IKKppC","IKK","A20","IKKC","IKKpp","IKKi","IKKa"];
+    subplotlist=[]
+    zlist=[]
+	for j=1:length(phase2_sollist[1][1])
+	    z=[]
+	    for i =1:length(phase2_sollist)
+	       yv=[]
+	       for ii in range(0,200,step=1)
+	       a=sollist[i](ii)
+	       push!(yv,a[j])
+	       end
+	       push!(z,yv)
+	    end
+	    m=plot(z,title=string(j))
+	    push!(zlist,m)
+	end
+    push!(zlist,current()) #most recent graph appended
+    return zlist
+end
+function plotallspecies(sol,tspan)
+	specie_names=["C","Cp","signal","CB","CpB","CM","CpM","CBM","CpBM","B","M","BM","TAK1","TAK1p","IKKp","TAK1C","TAK1pC","IKKpC","IKKppC","IKK","A20","IKKC","IKKpp","IKKi","IKKa"];
+    subplotlist=[]
+    for j = 1:length(sol[1])
+        yvalues=[]
+        for i in range(0,length=Integer(tspan[2]))
+            local a=sol(i)
+            push!(yvalues,a[j])
+        end
+        if isassigned(specie_names,j)
+            plot(yvalues,title=specie_names[j])
+        else  #make graph
+            plot(yvalues,title="extra")
+        end
+        push!(subplotlist,current()) #most recent graph appended
+    end
+    # plotactiveIKK(sol,tspan)
+    push!(subplotlist,current())
+    return subplotlist
+end
+
+function originalsignal(t)
+    global PHASE
+    global DOSE
+    if PHASE == 1
+        sinput=1.0;
+        slate=0.05;
+        sbase=0.0;
+        tpulse=0.25;
+        traise=0.5;
+        tdecay=0.5;
+        tdelay=0;
+    else
+        sinput = 1.0 - (1.0)*DOSE;
+        #sbase = 0.01; #commented in original
+        tpulse = 0.25;
+        traise = 0.5;
+        tdecay = 0.5;
+        tdelay = 0;
+        #slate = 0.05 - (0.05 - 0.01)*DOSE; #this line would make slate=0.01*DOSE. Commented in original
+        sbase=0.0;
+        slate=0.05 - (0.05)*DOSE;
+    end
+
+    signal=sbase;
+
+    if t <= tdelay || PHASE==1
+        signal = sbase;
+    elseif tdelay < t && t <= (traise + tdelay)
+        signal = (t - tdelay)*(sinput - sbase)/traise + sbase;
+    elseif (traise + tdelay) < t && t <= (tpulse + traise + tdelay)
+        signal = sinput;
+    elseif (tpulse + traise + tdelay) < t
+        signal = (sinput - slate)*exp(-(t - tpulse - traise - tdelay)/tdecay) + slate;
+    end
+    return signal
+end
+				      #signal 																														       #A20									         #IKKactive
+newu0=[0.658, 9.237e-6, 0, 0.152, 1.849e-5, 0.133, 1.367e-5, 0.057, 5.7677e-5, 0.698, 0.717, 0.093, 0.731, 0.113, 0.009, 0.13, 0.026, 0.042, 2.625e-8, 0.719, 0, 0.231, 2.0e-6, 4.076e-8, 0.0, ]
+# u0DONOTREUSE=[0.698, 0.717, 0, 0.093, 0.658, 0.152, 0.133, 9.237e-6, 1.849e-5, 1.367e-5, 0.057, 5.7677e-5, 0.731, 0.130, 0.113, 0.026, 0.719, 0.231, 0.009, 0, 0.042, 2.625e-8, 2.000e-6, 4.076e-8, 0]
+u0=ones(25)*0.2; u0[1]=1; u0[10]=1; u0[11]=1; u0[13]=1; u0[20]=1; u0[21]=0.1
+u0[5]=0.3; u0[7]=0.3; u0[8]=0.3 #trying to stop CpB, CpM, CpBM going negative
+tspan=[0.0,360.0]
+
+sollist=[]
+for n in 1:24
+	u0=ones(25)*0.2; u0[1]=1; u0[10]=1; u0[11]=1; u0[13]=1; u0[20]=1; u0[21]=0.1; u0[25]=(u0[15]+u0[18]+u0[19]+u0[23]);
+	u0[n]=2
+	println(n)
+	problemphase1=ODEProblem(odeFile,u0,(0.0,1000.0),maxiters=1e7 )
+	global PHASE = 1
+	phase1sol=solve(problemphase1)
+	push!(sollist, phase1sol)
+end
+subplotlist=plotallspecies(sollist[10],[0.0,1000])
+nsubplotlist=plotallspeciesna(sollist,[0.0,1000])
+# println(phase1sol[end])
+#
+# problemphase2=ODEProblem(odeFile,newu0,tspan)
+# global DOSE = 1.0
+# global PHASE = 2
+# sol=solve(problemphase2)
+
+plot(subplotlist[1],subplotlist[2],subplotlist[3],subplotlist[4],subplotlist[5],subplotlist[6],subplotlist[7],subplotlist[8],subplotlist[9],subplotlist[10],subplotlist[11],subplotlist[12],subplotlist[13],subplotlist[14],subplotlist[15],subplotlist[16],subplotlist[17],subplotlist[18],subplotlist[19],subplotlist[20],subplotlist[21],subplotlist[22],subplotlist[23],subplotlist[24],subplotlist[25],size=[1250,800])
+plot(nsubplotlist[1],nsubplotlist[2],nsubplotlist[3],nsubplotlist[4],nsubplotlist[5],nsubplotlist[6],nsubplotlist[7],nsubplotlist[8],nsubplotlist[9],nsubplotlist[10],nsubplotlist[11],nsubplotlist[12],nsubplotlist[13],nsubplotlist[14],nsubplotlist[15],nsubplotlist[16],nsubplotlist[17],nsubplotlist[18],nsubplotlist[19],nsubplotlist[20],nsubplotlist[21],nsubplotlist[22],nsubplotlist[23],nsubplotlist[24],nsubplotlist[25],size=[1250,800])
+# plot(nsubplotlist[21])
