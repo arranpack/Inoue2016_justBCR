@@ -186,7 +186,7 @@ for n = [0.1,1]
 	sol=solve(problemphase2)
 	push!(sollist,sol)
 end  
-nsubplotlist=plotallspeciessignalpt(sollist,tspan)
+#nsubplotlist=plotallspeciessignalpt(sollist,tspan)
 nsubplotlist=plotallspeciessignalpt(phase1_sollist,[0.0,1000.0])
 
 plot(nsubplotlist[1],nsubplotlist[2],nsubplotlist[3],nsubplotlist[4],nsubplotlist[5],nsubplotlist[6],nsubplotlist[7],nsubplotlist[8],nsubplotlist[9],nsubplotlist[10],nsubplotlist[11],nsubplotlist[12],nsubplotlist[13],nsubplotlist[14],nsubplotlist[15],nsubplotlist[16],nsubplotlist[17],nsubplotlist[18],nsubplotlist[19],nsubplotlist[20],nsubplotlist[21],nsubplotlist[22],nsubplotlist[23],nsubplotlist[24],size=[1250,800],legend=:none)
