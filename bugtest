@@ -13,8 +13,8 @@
 #######################################################
 
 using DifferentialEquations, Plots
-# include("scanIncludes.jl")
-# include("variableNames.jl")
+include("scanIncludes.jl")
+include("variableNames.jl")
 function odeFile(dy,y,p,t)
 	C=y[1]
 	Cp=y[2]
